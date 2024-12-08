@@ -2,6 +2,8 @@ import requests
 import re
 import json
 import os
+import argparse
+
 from time import sleep
 from merge import merge
 
@@ -68,9 +70,11 @@ class BilibiliVideo:
         print("下载完成")
 
 if __name__ == "__main__":
-    bvid = "" # 填入要下载视频的BV号，如BV18qBZY7EWo
-    cookie = "" # 填入登录B站后生成的网页cookie
+    parser = argparse.ArgumentParser(description="下载B站视频")
+    parser.add_argument('bvid', type=str, help='要下载视频的BV号，如BV18qBZY7EWo')
+    parser.add_argument('cookie', type=str, help='登录B站后生成的网页cookie')
+    args = parser.parse_args()
 
     os.mkdir("video")
-    bili = BilibiliVideo(bvid, cookie)
+    bili = BilibiliVideo(args.bvid, args.cookie)
     bili.download_video()
